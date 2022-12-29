@@ -1,36 +1,18 @@
 import React, {FC, useCallback, useState} from 'react';
-import {Alert, Pressable, Text} from 'react-native';
-import {firebase} from '@react-native-firebase/auth';
 
-import {Input, Button} from '../components';
+import {Input, Button, Link} from '../components';
 import {SIGN_UP} from '../constants/constants';
-import {
-  StyledContainer,
-  StyledLink,
-  StyledText,
-  StyledView,
-} from './Screens.styles';
+import {StyledContainer, StyledText} from './Screens.styles';
+import useLogin from '../hooks/useLogin';
 
 const Login: FC = props => {
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
+  const {loginUser} = useLogin();
 
   const handleLoginUser = useCallback(async () => {
-    if (email && password) {
-      try {
-        const user = await firebase
-          .auth()
-          .signInWithEmailAndPassword(email, password);
-        if (user) {
-          Alert.alert('User Logged In!');
-        }
-      } catch (e) {
-        Alert.alert('Login failed, no user record found!');
-      }
-    } else {
-      Alert.alert('Please enter all fields!');
-    }
-  }, [email, password]);
+    loginUser(email, password);
+  }, [email, password, loginUser]);
 
   return (
     <StyledContainer>
@@ -42,12 +24,11 @@ const Login: FC = props => {
         secureTextEntry
       />
       <Button label="Login" onPress={handleLoginUser} />
-      <StyledView>
-        <Text>Not signed up? </Text>
-        <Pressable onPress={() => props.navigation.navigate(SIGN_UP)}>
-          <StyledLink>Sign Up</StyledLink>
-        </Pressable>
-      </StyledView>
+      <Link
+        text="Not signed up? "
+        link="Sign Up"
+        navigateTo={() => props.navigation.navigate(SIGN_UP)}
+      />
     </StyledContainer>
   );
 };

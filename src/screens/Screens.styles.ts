@@ -11,12 +11,3 @@ export const StyledText = styled.Text`
   font-size: 16px;
   color: '#333';
 `;
-
-export const StyledView = styled.View`
-  flex-direction: row;
-  margin-top: 20px;
-`;
-
-export const StyledLink = styled.Text`
-  color: blueviolet;
-`;

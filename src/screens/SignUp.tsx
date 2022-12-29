@@ -1,43 +1,19 @@
 import React, {FC, useCallback, useState} from 'react';
-import {Alert, Pressable, Text} from 'react-native';
-import {firebase} from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 
-import {Input, Button} from '../components';
-import {LOGIN, USER_COLLECTION} from '../constants/constants';
-import {
-  StyledContainer,
-  StyledLink,
-  StyledText,
-  StyledView,
-} from './Screens.styles';
+import {Input, Button, Link} from '../components';
+import {LOGIN} from '../constants/constants';
+import {StyledContainer, StyledText} from './Screens.styles';
+import useSignUp from '../hooks/useSignUp';
 
 const SignUp: FC = props => {
   const [name, setName] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
+  const {signUpUser} = useSignUp();
 
-  const handleSignUpUser = useCallback(async () => {
-    if (name && email && password) {
-      try {
-        const user = await firebase
-          .auth()
-          .createUserWithEmailAndPassword(email, password);
-        if (user) {
-          Alert.alert('User added successfully!');
-          await firestore().collection(USER_COLLECTION).doc(user.uid).set({
-            name,
-            email,
-            password,
-          });
-        }
-      } catch (e) {
-        Alert.alert('Signup failed!');
-      }
-    } else {
-      Alert.alert('Please enter all fields!');
-    }
-  }, [email, name, password]);
+  const handleSignUpUser = useCallback(() => {
+    signUpUser(name, email, password);
+  }, [email, name, password, signUpUser]);
 
   return (
     <StyledContainer>
@@ -50,12 +26,11 @@ const SignUp: FC = props => {
         secureTextEntry
       />
       <Button label="Sign Up" onPress={handleSignUpUser} />
-      <StyledView>
-        <Text>Already a user? </Text>
-        <Pressable onPress={() => props.navigation.navigate(LOGIN)}>
-          <StyledLink>Login</StyledLink>
-        </Pressable>
-      </StyledView>
+      <Link
+        text="Already a user? "
+        link="Login"
+        navigateTo={() => props.navigation.navigate(LOGIN)}
+      />
     </StyledContainer>
   );
 };

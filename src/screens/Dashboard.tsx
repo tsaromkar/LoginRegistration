@@ -1,40 +1,17 @@
-import React, {FC, useCallback, useEffect, useState} from 'react';
-import {firebase} from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import React, {FC, useCallback} from 'react';
+import {View} from 'react-native';
 
 import {Button, Header} from '../components';
-import {USER_COLLECTION} from '../constants/constants';
-import {Alert, View} from 'react-native';
+import useFetchUser from '../hooks/usefetchUser';
+import useSignOut from '../hooks/useSignOut';
 
 const Dashboard: FC = () => {
-  const [user, setUser] = useState<any | null>(null);
-
-  const fetchData = async (currentUser: any) => {
-    try {
-      const userDetails = await firestore()
-        .collection(USER_COLLECTION)
-        .where('email', '==', currentUser.email)
-        .get();
-      const [{_data} = _data] = userDetails.docs;
-      setUser(_data);
-    } catch (e) {
-      console.log(e);
-      Alert.alert('Some error while getting user details!');
-    }
-  };
-
-  useEffect(() => {
-    const currentUser = firebase.auth().currentUser;
-    currentUser && fetchData(currentUser);
-  }, []);
+  const {user} = useFetchUser();
+  const {signOut} = useSignOut();
 
   const handleSignOut = useCallback(async () => {
-    try {
-      await firebase.auth().signOut();
-    } catch (e) {
-      console.log('Signup failed', e);
-    }
-  }, []);
+    signOut();
+  }, [signOut]);
 
   return (
     <View>
