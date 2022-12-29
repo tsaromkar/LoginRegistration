@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "802574794852",
+    "project_id": "reactnativeauth-e0ee9",
+    "storage_bucket": "reactnativeauth-e0ee9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:802574794852:android:1def6c745e623417571f71",
+        "android_client_info": {
+          "package_name": "com.loginregistration"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "802574794852-u8hm9ro216r76mc7vvjhjhcjgmv1er97.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.loginregistration",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "802574794852-74nvdvav1tchgikhbb3hvfmoi8vkjmvv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5Ux9T9LJzAmE9ZiA4WUOemmeg397tL0Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "802574794852-74nvdvav1tchgikhbb3hvfmoi8vkjmvv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
